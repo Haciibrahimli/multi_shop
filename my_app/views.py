@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from my_app.forms import  ContactForm
 
 
 def cart_view(request):
@@ -19,13 +20,23 @@ def checkout_view(request):
 
 
 
-def contact_view(request):
 
-    context = {
-        
+def contact_view(request):
+   
+    form = ContactForm()
+    
+    if request.method == 'POST':
+        form = ContactForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            form = ContactForm()
+
+    context ={
+      'form':form,
+      
+      
     }
     return render(request,'contact.html',context)
-
 
 
 def detail_view(request):

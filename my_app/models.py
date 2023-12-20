@@ -87,3 +87,38 @@ class Product(SlugMixin,DateMixin):
     # contact modeli form ve istifadeci yalniz 20 den az yaza bilr subject
     # chekout modeli
     # base.html
+        
+class Partniors(SlugMixin,DateMixin):
+      image = models.ImageField(upload_to=Uploader.upload_photo_partniors,null=True,blank=True)
+      
+      def __str__(self):
+        return self.image
+
+      class Meta:
+       ordering = ('-created_at',)
+       verbose_name = 'partnior sekil'
+       verbose_name_plural = 'partnior sekiller'
+
+class Contact(SlugMixin,DateMixin):
+       
+    name = models.CharField(max_length=255,verbose_name='ad ve soyad')
+    email = models.CharField(max_length=255,verbose_name='email adress')
+    subject = models.CharField(max_length=255,verbose_name='movzu')
+    mesage = models.TextField(verbose_name='mesaj')
+    
+    
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+
+     ordering = ('name',)
+     verbose_name = 'contact'
+     verbose_name_plural = 'contactlar'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+         self.slug = Generator.create_slug_shortcode(size=20, model_=Contact)
+        super(Contact, self).save(*args, **kwargs)   
+
