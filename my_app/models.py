@@ -3,6 +3,15 @@ from services.mixin import DateMixin,SlugMixin
 from services.generator import Generator 
 from services.uploader import Uploader
 
+COUNTRY_CHOICES = (
+    ("usa", "Amerika"),
+    ("az", "Azerbaijan"),
+    ("eu", "Europa"),
+    ("as", "Asia"),
+    ("linkedin", "Linkedin"),
+    
+)
+
 
 # Create your models here.
 class Category(SlugMixin,DateMixin):
@@ -106,8 +115,7 @@ class Contact(SlugMixin,DateMixin):
     subject = models.CharField(max_length=255,verbose_name='movzu')
     mesage = models.TextField(verbose_name='mesaj')
     
-    
-
+   
     def __str__(self):
         return self.name
     
@@ -122,3 +130,29 @@ class Contact(SlugMixin,DateMixin):
          self.slug = Generator.create_slug_shortcode(size=20, model_=Contact)
         super(Contact, self).save(*args, **kwargs)   
 
+
+class Checkout(SlugMixin,DateMixin):
+       name = models.CharField(max_length = 255,verbose_name = 'ad')
+       surname = models.CharField(max_length = 255,verbose_name = 'soyad')
+       email = models.CharField(max_length = 255,verbose_name = 'email')
+       phone = models.CharField(max_length = 255, verbose_name = 'telefon')
+       ardess1 = models.CharField(max_length = 255, verbose_name = 'adress 1')
+       ardess2 = models.CharField(max_length = 255, verbose_name = 'adress 2')
+       country = models.CharField(max_length=255,verbose_name='olke adlari',choices=COUNTRY_CHOICES)
+       city = models.CharField(max_length = 255,verbose_name = 'sheher adi')
+       state  = models.CharField(max_length = 255,verbose_name = 'dovlet')
+       zipcode = models.CharField(max_length = 255, verbose_name = 'olke kodu')
+
+       def __str__(self):
+         return self.name
+    
+       class Meta:
+        ordering = ('name',)
+        verbose_name = 'checkout'
+        verbose_name_plural = 'checkout'
+        
+
+        def save(self, *args, **kwargs):
+          if not self.slug:
+           self.slug = Generator.create_slug_shortcode(size=20, model_=Checkout)
+          super(Checkout, self).save(*args, **kwargs)   
