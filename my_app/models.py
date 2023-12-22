@@ -8,7 +8,7 @@ COUNTRY_CHOICES = (
     ("az", "Azerbaijan"),
     ("eu", "Europa"),
     ("as", "Asia"),
-    ("linkedin", "Linkedin"),
+    
     
 )
 
@@ -136,8 +136,8 @@ class Checkout(SlugMixin,DateMixin):
        surname = models.CharField(max_length = 255,verbose_name = 'soyad')
        email = models.CharField(max_length = 255,verbose_name = 'email')
        phone = models.CharField(max_length = 255, verbose_name = 'telefon')
-       ardess1 = models.CharField(max_length = 255, verbose_name = 'adress 1')
-       ardess2 = models.CharField(max_length = 255, verbose_name = 'adress 2')
+       adress1 = models.CharField(max_length = 255, verbose_name = 'adress 1')
+       adress2 = models.CharField(max_length = 255, verbose_name = 'adress 2')
        country = models.CharField(max_length=255,verbose_name='olke adlari',choices=COUNTRY_CHOICES)
        city = models.CharField(max_length = 255,verbose_name = 'sheher adi')
        state  = models.CharField(max_length = 255,verbose_name = 'dovlet')
@@ -152,7 +152,7 @@ class Checkout(SlugMixin,DateMixin):
         verbose_name_plural = 'checkout'
         
 
-        def save(self, *args, **kwargs):
-          if not self.slug:
-           self.slug = Generator.create_slug_shortcode(size=20, model_=Checkout)
-          super(Checkout, self).save(*args, **kwargs)   
+       def save(self, *args, **kwargs):
+         if not self.slug:
+          self.slug = Generator.create_slug_shortcode(size=20, model_=Checkout)
+         super(Checkout, self).save(*args, **kwargs)   
