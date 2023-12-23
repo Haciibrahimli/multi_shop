@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from my_app.forms import  ContactForm,CheckoutForm
+from my_app.models import Product
 
 
 def cart_view(request):
@@ -49,11 +50,15 @@ def contact_view(request):
     return render(request,'contact.html',context)
 
 
-def detail_view(request):
+
+def detail_view(request,slug):
+
+    obj1 = Product.objects.get(slug=slug)
 
     context = {
-        
+    'obj1':obj1
     }
+    
     return render(request,'detail.html',context)
 
 
@@ -67,8 +72,10 @@ def index_view(request):
 
 
 def shop_view(request):
+    obj = Product.objects.all()
 
     context = {
+        'obj':obj
         
     }
     return render(request,'shop.html',context)
