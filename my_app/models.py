@@ -156,3 +156,15 @@ class Checkout(SlugMixin,DateMixin):
          if not self.slug:
           self.slug = Generator.create_slug_shortcode(size=20, model_=Checkout)
          super(Checkout, self).save(*args, **kwargs)   
+
+class ProductImage(DateMixin):
+       image = models.ImageField(upload_to=Uploader.upload_photo_products,null=True,blank=True)
+       product = models.ForeignKey(Product,on_delete = models.SET_NULL,null = True,blank = True)
+
+       def __str__(self):
+         return self.product.name
+    
+       class Meta:
+        ordering = ('-created_at',)
+        verbose_name = 'mehsul shekili'
+        verbose_name_plural = 'mehsul shekilleri'
