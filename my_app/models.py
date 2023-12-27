@@ -2,6 +2,7 @@ from django.db import models
 from services.mixin import DateMixin,SlugMixin  
 from services.generator import Generator 
 from services.uploader import Uploader
+from django.contrib.auth import get_user_model 
 
 COUNTRY_CHOICES = (
     ("usa", "Amerika"),
@@ -11,6 +12,8 @@ COUNTRY_CHOICES = (
     
     
 )
+
+User = get_user_model()
 
 
 # Create your models here.
@@ -168,3 +171,41 @@ class ProductImage(DateMixin):
         ordering = ('-created_at',)
         verbose_name = 'mehsul shekili'
         verbose_name_plural = 'mehsul shekilleri'
+
+class Blog(SlugMixin, DateMixin):
+    title = models.CharField(max_length=255,verbose_name='basliq')
+    description = models.TextField(verbose_name='movzu')
+    image = models.ImageField(upload_to=Uploader.upload_photo_to_blog,null=True,blank=True)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+
+     ordering = ('title',)
+     verbose_name = 'bloq'
+     verbose_name_plural = 'bloqlar'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+         self.slug = Generator.create_slug_shortcode(size=10, model_=Blog)
+        super(Blog, self).save(*args, **kwargs)
+
+class Comment(DateMixin, SlugMixin):
+    text = models.TextField(verbose_name="User's comment")
+    blog = models.ForeignKey(Blog, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+
+    def __str__(self):
+        return self.text[:10]
+
+    class Meta:
+        ordering = ("-created_at", )
+        verbose_name = "Rey"
+        verbose_name_plural = "Reyler"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = Generator.create_slug_shortcode(size=10, model_=Comment)
+        super(Comment, self).save(*args, **kwargs)

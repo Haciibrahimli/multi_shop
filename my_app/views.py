@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from my_app.forms import  ContactForm,CheckoutForm
 from my_app.models import Product
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def cart_view(request):
@@ -74,9 +75,21 @@ def index_view(request):
 def shop_view(request):
     obj = Product.objects.all()
 
+    paginator = Paginator(obj, 1)
+    page = request.GET.get('page', 1)
+    p = paginator.get_page(page)
+
+    try:
+        p = paginator.page(page)
+    except PageNotAnInteger:
+        p = paginator.page(1)
+    except EmptyPage:
+        p = paginator.page(paginator.num_pages)
+
     context = {
-        'obj':obj
-        
+        'obj':obj,
+        'p':p
     }
+    
     return render(request,'shop.html',context)
 
