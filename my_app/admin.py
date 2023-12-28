@@ -14,4 +14,5 @@ admin.site.register(Size)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Contact)
 admin.site.register(Checkout)
+admin.site.register(Comment)
 

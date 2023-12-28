@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from my_app.forms import  ContactForm,CheckoutForm
-from my_app.models import Product
+from my_app.forms import  ContactForm,CheckoutForm,CommentForm
+from my_app.models import Product,Comment
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
@@ -55,9 +55,24 @@ def contact_view(request):
 def detail_view(request,slug):
 
     obj1 = Product.objects.get(slug=slug)
+    comments = Comment.objects.filter(products=obj1)
+    
+    form = CommentForm()
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST or None)
+        print(form.errors)
+        if form.is_valid():
+            user = form.cleaned_data.get("user")
+            product = form.cleaned_data.get("products")
+            form.save()
+            form = CommentForm()
 
     context = {
-    'obj1':obj1
+    'obj1':obj1,
+    'comments':comments,
+    'form':form
+
     }
     
     return render(request,'detail.html',context)
@@ -92,4 +107,6 @@ def shop_view(request):
     }
     
     return render(request,'shop.html',context)
+
+
 
