@@ -100,11 +100,11 @@ class Product(SlugMixin,DateMixin):
     # chekout modeli
     # base.html
         
-class Partniors(SlugMixin,DateMixin):
+class Partniors(DateMixin):
       image = models.ImageField(upload_to=Uploader.upload_photo_partniors,null=True,blank=True)
       
       def __str__(self):
-        return self.image
+        return f'{self.created_at}'
 
       class Meta:
        ordering = ('-created_at',)

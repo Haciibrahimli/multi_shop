@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from my_app.forms import  ContactForm,CheckoutForm,CommentForm
-from my_app.models import Product,Comment
+from my_app.models import Product,Comment,Category,Partniors
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
@@ -56,6 +56,7 @@ def detail_view(request,slug):
 
     obj1 = Product.objects.get(slug=slug)
     comments = Comment.objects.filter(products=obj1)
+    related_product = Product.objects.filter(category=obj1.category).exclude(id=obj1.id)
     
     form = CommentForm()
     
@@ -71,7 +72,8 @@ def detail_view(request,slug):
     context = {
     'obj1':obj1,
     'comments':comments,
-    'form':form
+    'form':form,
+    'related_product':related_product,
 
     }
     
@@ -79,9 +81,16 @@ def detail_view(request,slug):
 
 
 def index_view(request):
+    categories = Category.objects.all()
+    products = Product.objects.filter(rating__gte=4)[:8]
+    recent_products = Product.objects.order_by('-created_at')[:8]
+    partniors = Partniors.objects.all()
 
     context = {
-        
+        'categories':categories,
+        'products':products,
+        'recent_products':recent_products,
+        'partniors':partniors,
     }
     return render(request,'index.html',context)
 
