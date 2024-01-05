@@ -192,3 +192,21 @@ class Comment(DateMixin, SlugMixin):
             self.slug = Generator.create_slug_shortcode(size=10, model_=Comment)
         super(Comment, self).save(*args, **kwargs)
 
+
+class SpecialOffer(DateMixin, SlugMixin):
+    text = models.TextField(verbose_name="metn")
+    discount = models.TextField(verbose_name = 'endirim')
+    image = models.ImageField(upload_to=Uploader.upload_photo_special_offer,null=True,blank=True)
+
+    def __str__(self):
+        return self.discount
+
+    class Meta:
+        ordering = ("-created_at", )
+        verbose_name = "xususi teklif"
+        verbose_name_plural = "xususi teklifler"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = Generator.create_slug_shortcode(size=10, model_=SpecialOffer)
+        super(SpecialOffer, self).save(*args, **kwargs)

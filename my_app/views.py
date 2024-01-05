@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from my_app.forms import  ContactForm,CheckoutForm,CommentForm
-from my_app.models import Product,Comment,Category,Partniors
+from my_app.models import Product,Comment,Category,Partniors,SpecialOffer
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
@@ -85,12 +85,14 @@ def index_view(request):
     products = Product.objects.filter(rating__gte=4)[:8]
     recent_products = Product.objects.order_by('-created_at')[:8]
     partniors = Partniors.objects.all()
+    specialoffer = SpecialOffer.objects.all()
 
     context = {
         'categories':categories,
         'products':products,
         'recent_products':recent_products,
         'partniors':partniors,
+        'specialoffer':specialoffer,
     }
     return render(request,'index.html',context)
 
