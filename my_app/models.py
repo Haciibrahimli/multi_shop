@@ -4,6 +4,8 @@ from services.generator import Generator
 from services.uploader import Uploader
 from django.contrib.auth import get_user_model 
 
+
+
 COUNTRY_CHOICES = (
     ("usa", "Amerika"),
     ("az", "Azerbaijan"),
@@ -20,13 +22,16 @@ User = get_user_model()
 class Category(SlugMixin,DateMixin):
     name = models.CharField(max_length = 255,verbose_name = 'adi')
 
+
     def __str__(self):
         return self.name
+
 
     class Meta:
      ordering = ('-created_at',)
      verbose_name = 'category'
      verbose_name_plural = 'categories'
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -40,6 +45,7 @@ class Category(SlugMixin,DateMixin):
 class Color(DateMixin,SlugMixin):
       name = models.TextField(verbose_name = 'mehsulun rengi')
 
+
       def __str__(self):
         return self.name
 
@@ -52,6 +58,8 @@ class Color(DateMixin,SlugMixin):
         if not self.slug:
          self.slug = Generator.create_slug_shortcode(size=10, model_=Color)
         super(Color, self).save(*args, **kwargs)
+
+        
 
 class Size(DateMixin,SlugMixin):
       name = models.TextField(verbose_name = 'mehsulun olcusu')
