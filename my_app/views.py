@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from my_app.forms import  ContactForm,CheckoutForm,CommentForm
-from my_app.models import Product,Comment,Category,Partniors,SpecialOffer
+from my_app.models import Product,Comment,Category,Partniors,SpecialOffer,Slider,Basket
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def cart_view(request):
+    basket = Basket.objects.all()
    
     context = {
+        
+        'basket':basket,
       
     }
 
@@ -86,6 +89,11 @@ def index_view(request):
     recent_products = Product.objects.order_by('-created_at')[:8]
     partniors = Partniors.objects.all()
     specialoffer = SpecialOffer.objects.all()
+    slider = Slider.objects.all()
+    
+    search = request.GET.get('search') #search
+    if search is not None:
+     categories = categories.filter(title__icontains = search)
 
     context = {
         'categories':categories,
@@ -93,6 +101,7 @@ def index_view(request):
         'recent_products':recent_products,
         'partniors':partniors,
         'specialoffer':specialoffer,
+        'slider':slider
     }
     return render(request,'index.html',context)
 

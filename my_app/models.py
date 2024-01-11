@@ -218,3 +218,39 @@ class SpecialOffer(DateMixin, SlugMixin):
         if not self.slug:
             self.slug = Generator.create_slug_shortcode(size=10, model_=SpecialOffer)
         super(SpecialOffer, self).save(*args, **kwargs)
+
+class Slider(DateMixin):
+       image = models.ImageField(upload_to=Uploader.upload_photo_slider,null=True,blank=True)
+       title = models.CharField(max_length = 255, verbose_name = 'basliq')
+       text = models.TextField(verbose_name="metn")
+
+       def __str__(self):
+         return self.title
+    
+       class Meta:
+        ordering = ('-created_at',)
+        verbose_name = 'slider'
+        verbose_name_plural = 'sliders'
+
+
+class Basket(DateMixin, SlugMixin):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    products = models.ForeignKey(Product,on_delete=models.SET_NULL, null=True, blank=True)
+    count = models.IntegerField()
+    total_price = models.FloatField(null=True, blank=True)
+
+    def __str__(self):
+          return self.user.first_name
+
+    class Meta:
+        ordering = ("-created_at", )
+        verbose_name = "sebet"
+        verbose_name_plural = "sebetler"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = Generator.create_slug_shortcode(size=10, model_=Basket)
+        super(Basket, self).save(*args, **kwargs)
+
+
+
