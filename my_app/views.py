@@ -91,9 +91,7 @@ def index_view(request):
     specialoffer = SpecialOffer.objects.all()
     slider = Slider.objects.all()
     
-    search = request.GET.get('search') #search
-    if search is not None:
-     categories = categories.filter(title__icontains = search)
+  
 
     context = {
         'categories':categories,
@@ -110,6 +108,14 @@ def index_view(request):
 def shop_view(request):
     obj = Product.objects.all()
 
+    search = request.GET.get('search') #search
+    if search is not None:
+     obj =  obj.filter(name__icontains = search)
+
+    cat = request.GET.get('cat')
+    if cat :
+     obj = obj.filter(category__name__icontains = cat)
+
     paginator = Paginator(obj, 1)
     page = request.GET.get('page', 1)
     p = paginator.get_page(page)
@@ -123,7 +129,9 @@ def shop_view(request):
 
     context = {
         'obj':obj,
-        'p':p
+        'p':p,
+        'search':search,
+        'cat':cat,
     }
     
     return render(request,'shop.html',context)
