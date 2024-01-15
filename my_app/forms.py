@@ -1,5 +1,5 @@
 from django import forms
-from my_app.models import Contact,Checkout,Comment
+from my_app.models import Contact,Checkout,Comment,SignUp
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -63,3 +63,14 @@ class CommentForm(forms.ModelForm):
         for field in self.fields:
          self.fields['text'].widget.attrs.update({'placeholder':'text'})
          self.fields['text'].label='text'
+
+class SignUpForm(forms.ModelForm):
+    class Meta:
+        model = SignUp
+        fields = ('email',) 
+
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm , self).__init__(*args, **kwargs)
+        for field in self.fields:
+         self.fields['email'].widget.attrs.update({'placeholder':'enter your email'})
+         self.fields['email'].label='email'

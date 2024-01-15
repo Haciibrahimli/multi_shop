@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from my_app.forms import  ContactForm,CheckoutForm,CommentForm
-from my_app.models import Product,Comment,Category,Partniors,SpecialOffer,Slider,Basket
+from my_app.models import Product,Comment,Category,Partniors,SpecialOffer,Slider,Basket,Color,Size
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
@@ -107,6 +107,8 @@ def index_view(request):
 
 def shop_view(request):
     obj = Product.objects.all()
+    colors = Color.objects.all()
+    sizes = Size.objects.all()
 
     search = request.GET.get('search') #search
     if search is not None:
@@ -132,6 +134,8 @@ def shop_view(request):
         'p':p,
         'search':search,
         'cat':cat,
+        'colors':colors,
+        'sizes':sizes
     }
     
     return render(request,'shop.html',context)

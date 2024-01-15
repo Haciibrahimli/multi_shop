@@ -251,6 +251,9 @@ class Basket(DateMixin, SlugMixin):
         if not self.slug:
             self.slug = Generator.create_slug_shortcode(size=10, model_=Basket)
         super(Basket, self).save(*args, **kwargs)
+        
+class SignUp(DateMixin):
+    email = models.CharField(max_length = 255,verbose_name = 'email')
 
-
-
+    def __str__(self):
+        return self.email
