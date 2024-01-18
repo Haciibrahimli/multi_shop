@@ -5,6 +5,18 @@ from services.uploader import Uploader
 from django.contrib.auth import get_user_model 
 
 
+SOCIAL_CHOICES = (
+    ("insta", "Instagram"),
+    ("fb", "Facebook"),
+    ("wp", "WhatsApp"),
+    ("twitter", "Twitter"),
+    ("linkedin", "Linkedin"),
+    ("tiktok", "Tiktok")
+)
+
+
+
+
 
 COUNTRY_CHOICES = (
     ("usa", "Amerika"),
@@ -257,3 +269,17 @@ class SignUp(DateMixin):
 
     def __str__(self):
         return self.email
+    
+
+
+class SosialMedia(DateMixin):
+    sosial_name = models.CharField(max_length=255,verbose_name='sosial media hesabi',choices=SOCIAL_CHOICES)
+    sosial_link = models.TextField(verbose_name='sosial media linki')
+
+    def __str__(self):
+        return self.sosial_name
+
+    class Meta:
+        ordering = ("sosial_name", )
+        verbose_name = "sosial media hesabi"
+        verbose_name_plural = "sosial media hesablari"

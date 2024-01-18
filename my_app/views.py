@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from my_app.forms import  ContactForm,CheckoutForm,CommentForm
-from my_app.models import Product,Comment,Category,Partniors,SpecialOffer,Slider,Basket,Color,Size
+from my_app.models import Product,Comment,Category,Partniors,SpecialOffer,Slider,Basket,Color,Size, SosialMedia
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
@@ -99,7 +99,7 @@ def index_view(request):
         'recent_products':recent_products,
         'partniors':partniors,
         'specialoffer':specialoffer,
-        'slider':slider
+        'slider':slider,
     }
     return render(request,'index.html',context)
 
