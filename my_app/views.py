@@ -104,21 +104,31 @@ def index_view(request):
     return render(request,'index.html',context)
 
 
-
 def shop_view(request):
     obj = Product.objects.all()
     colors = Color.objects.all()
     sizes = Size.objects.all()
+    color = request.GET.getlist("color") # ['1', '2', ...]
+    print(color)
 
-    search = request.GET.get('search') #search
+    for i in obj:
+        if str(i.id) in color:
+            obj = obj.filter(color__id=i.id)
+
+    size = request.GET.getlist("sizes")
+    for j in obj:
+        if str(j.id) in size:
+            obj = obj.filter(size__id=j.id)
+
+    search = request.GET.get('search')  # search
     if search is not None:
-     obj =  obj.filter(name__icontains = search)
+        obj = obj.filter(name__icontains=search)
 
     cat = request.GET.get('cat')
-    if cat :
-     obj = obj.filter(category__name__icontains = cat)
+    if cat:
+        obj = obj.filter(category__name__icontains=cat)
 
-    paginator = Paginator(obj, 1)
+    paginator = Paginator(obj, 5)
     page = request.GET.get('page', 1)
     p = paginator.get_page(page)
 
@@ -130,15 +140,15 @@ def shop_view(request):
         p = paginator.page(paginator.num_pages)
 
     context = {
-        'obj':obj,
-        'p':p,
-        'search':search,
-        'cat':cat,
-        'colors':colors,
-        'sizes':sizes
+        'obj': obj,
+        'p': p,
+        'search': search,
+        'cat': cat,
+        'colors': colors,
+        'sizes': sizes
     }
-    
-    return render(request,'shop.html',context)
+
+    return render(request, 'shop.html', context)
 
 
 

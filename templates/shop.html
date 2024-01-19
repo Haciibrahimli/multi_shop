@@ -25,10 +25,12 @@
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4">
+                <form method="get">
+                    {% csrf_token %}
                 <!-- Price Start -->
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
                 <div class="bg-light p-4 mb-30">
-                    <form>
+
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" checked id="price-all">
                             <label class="custom-control-label" for="price-all">All Price</label>
@@ -59,40 +61,43 @@
                             <label class="custom-control-label" for="price-5">$400 - $500</label>
                             <span class="badge border font-weight-normal">168</span>
                         </div>
-                    </form>
+
                 </div>
                 <!-- Price End -->
                 
                 <!-- Color Start -->
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by color</span></h5>
                 <div class="bg-light p-4 mb-30">
-                    <form>
+
                         {% for c in colors %}
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input"  id="{{c.name}}">
+                            <input type="checkbox" class="custom-control-input" value="{{c.id}}"  id="{{c.name}}" name="colors">
                             <label class="custom-control-label" for="{{c.name}}">{{c.name}}</label>
                             <span class="badge border font-weight-normal">1000</span>
                         </div>
                         {% endfor %}
                      
-                    </form>
+                   
                 </div>
                 <!-- Color End -->
 
                 <!-- Size Start -->
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by size</span></h5>
                 <div class="bg-light p-4 mb-30">
-                    <form>
+
                         {% for s in sizes %}
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input"  id="{{s.name}}">
+                            <input type="checkbox" class="custom-control-input" value="{{s.id}}" id="{{s.name}}" name="sizes">
                             <label class="custom-control-label" for="{{s.name}}">{{s.name}}</label>
                             <span class="badge border font-weight-normal">1000</span>
                         </div>
                         {% endfor %}
-                    </form>
+
                 </div>
+                    <button type="submit" class="btn btn-warning">Search</button>
+                      </form>
                 <!-- Size End -->
+
             </div>
             <!-- Shop Sidebar End -->
 
@@ -125,6 +130,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     {% for s in p %}
                     <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
