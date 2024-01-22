@@ -108,17 +108,28 @@ def shop_view(request):
     obj = Product.objects.all()
     colors = Color.objects.all()
     sizes = Size.objects.all()
-    color = request.GET.getlist("color") # ['1', '2', ...]
-    print(color)
+    color = request.GET.getlist("colors") # ['1', '2', ...]
+
+    
+    min_value = request.GET.get("minprice")
+    max_value = request.GET.get("maxprice")
+
+    if min_value:
+        obj = obj.filter(price__gte=min_value)
+    if max_value:   
+        obj = obj.filter(price__lte=max_value)
+
 
     for i in obj:
-        if str(i.id) in color:
-            obj = obj.filter(color__id=i.id)
+        for j in i.color.all():
+         if str(j.id) in color:
+            obj = obj.filter(color__id=j.id)
 
     size = request.GET.getlist("sizes")
-    for j in obj:
-        if str(j.id) in size:
-            obj = obj.filter(size__id=j.id)
+    for s in obj:
+        for d in s.size.all():
+         if str(d.id) in size:
+            obj = obj.filter(size__id=d.id)
 
     search = request.GET.get('search')  # search
     if search is not None:
