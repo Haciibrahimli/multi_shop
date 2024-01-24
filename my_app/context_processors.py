@@ -1,4 +1,4 @@
-from my_app.models import Product,Category,SignUp,SosialMedia
+from my_app.models import Product,Category,SignUp,SosialMedia,MainDetails
 from my_app.forms import SignUpForm
 
 def data_sender(request):
@@ -14,6 +14,7 @@ def data_sender(request):
     products_ = Product.objects.all()
     categorys_ = Category.objects.all()
     socials = SosialMedia.objects.all()
+    main_detail = MainDetails.objects.all()
     
-    return {"products_": products_,"categorys_":categorys_,"form":form,"socials":socials}
+    return {"products_": products_,"categorys_":categorys_,"form":form,"socials":socials,"main_detail":main_detail}
     

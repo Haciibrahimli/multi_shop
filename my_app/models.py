@@ -283,3 +283,19 @@ class SosialMedia(DateMixin):
         ordering = ("sosial_name", )
         verbose_name = "sosial media hesabi"
         verbose_name_plural = "sosial media hesablari"
+
+
+class MainDetails(DateMixin):
+    email = models.EmailField(verbose_name='Email')
+    adresss = models.CharField(max_length=255,verbose_name='adress' )
+    phones = models.CharField(max_length=255,verbose_name='phones')
+  
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        ordering = ("-created_at", )
+        verbose_name = "elaqe melumati"
+        verbose_name_plural = "elaqe melumatlari"
+
+    

@@ -90,6 +90,7 @@ def index_view(request):
     partniors = Partniors.objects.all()
     specialoffer = SpecialOffer.objects.all()
     slider = Slider.objects.all()
+   
     
   
 
@@ -100,6 +101,7 @@ def index_view(request):
         'partniors':partniors,
         'specialoffer':specialoffer,
         'slider':slider,
+        
     }
     return render(request,'index.html',context)
 
