@@ -4,6 +4,6 @@ from my_app.models import Product
 from django.shortcuts import redirect
 
 
-@receiver(post_save, sender=Product)
-def my_function(instance, created, **kwargs):
-    return 
+# @receiver(post_save, sender=Product)
+# def my_function(instance, created, **kwargs):
+#     return 

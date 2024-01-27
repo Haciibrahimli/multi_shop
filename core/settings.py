@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'my_app',
     'account',
+    'translations',
 ]
 
 MIDDLEWARE = [
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -107,7 +109,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'az'
+LANGUAGES = (            
+    ('en', 'English'),
+    ('en-gb', 'English (Great Britain)'),
+    ('de', 'German'),
+    ('tr', 'Turkish'),
+)
 
 TIME_ZONE = 'Asia/Baku'
 

@@ -131,12 +131,24 @@ class Partniors(DateMixin):
        verbose_name = 'partnior sekil'
        verbose_name_plural = 'partnior sekiller'
 
+class Location(DateMixin):
+    location = models.CharField(max_length=255,verbose_name='location')
+
+    def __str__(self):
+        return self.location
+
+    class Meta:
+        ordering = ("-created_at", )
+        verbose_name = "location"
+        verbose_name_plural = "locations"
+
 class Contact(SlugMixin,DateMixin):
        
     name = models.CharField(max_length=255,verbose_name='ad ve soyad')
     email = models.CharField(max_length=255,verbose_name='email adress')
     subject = models.CharField(max_length=255,verbose_name='movzu')
     mesage = models.TextField(verbose_name='mesaj')
+    locations = models.ManyToManyField(Location,verbose_name='locations')
     
    
     def __str__(self):
@@ -289,6 +301,7 @@ class MainDetails(DateMixin):
     email = models.EmailField(verbose_name='Email')
     adresss = models.CharField(max_length=255,verbose_name='adress' )
     phones = models.CharField(max_length=255,verbose_name='phones')
+    
   
     def __str__(self):
         return self.email
@@ -297,5 +310,8 @@ class MainDetails(DateMixin):
         ordering = ("-created_at", )
         verbose_name = "elaqe melumati"
         verbose_name_plural = "elaqe melumatlari"
+
+
+
 
     
