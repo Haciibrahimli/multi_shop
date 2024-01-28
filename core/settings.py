@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'my_app',
     'account',
-    'translations',
+    'rosetta'
+    
 ]
 
 MIDDLEWARE = [
@@ -108,13 +110,19 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
+LANGUAGES = (
+    ("az", "az"),
+    ("en", "en"),
+    ("ru", "ru"),
 
-LANGUAGES = (            
-    ('en', 'English'),
-    ('en-gb', 'English (Great Britain)'),
-    ('de', 'German'),
-    ('tr', 'Turkish'),
 )
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'az'
+MODELTRANSLATION_LANGUAGES = ('az', 'en', 'ru')
 
 TIME_ZONE = 'Asia/Baku'
 

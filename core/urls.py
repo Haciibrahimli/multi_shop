@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path("account/", include("account.urls")),
     path("", include("my_app.urls")),
+     path('rosetta/', include('rosetta.urls')),
 
 ]
 
