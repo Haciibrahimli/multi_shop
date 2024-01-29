@@ -38,4 +38,4 @@ admin.site.register(Slider)
 admin.site.register(Basket)
 admin.site.register(SignUp)
 admin.site.register(MainDetails)
-admin.site.register(Location)
+

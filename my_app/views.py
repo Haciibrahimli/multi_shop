@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from my_app.forms import  ContactForm,CheckoutForm,CommentForm
-from my_app.models import Product,Comment,Category,Partniors,SpecialOffer,Slider,Basket,Color,Size, SosialMedia,Location,Contact
+from my_app.models import (Product,Comment,Category,Partniors,SpecialOffer,Slider,Basket,Color,Size, 
+SosialMedia,Contact,MainDetails,)
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
@@ -38,7 +39,8 @@ def checkout_view(request):
 def contact_view(request):
    
     form = ContactForm()
-   
+    main_detail = MainDetails.objects.all()
+
     
     if request.method == 'POST':
         form = ContactForm(request.POST or None)
@@ -50,6 +52,7 @@ def contact_view(request):
     context ={
 
       'form':form,
+      'main_detail':main_detail,
    
       
       
@@ -166,16 +169,6 @@ def shop_view(request):
 
     return render(request, 'shop.html', context)
 
-def location_view(request):
 
-    locations = Contact.objects.all()
-
-    context = {
-
-    'locations':locations,
-
-    }
-   
-    return render(request,'contact.html',context)
 
 
