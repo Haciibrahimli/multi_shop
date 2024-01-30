@@ -14,7 +14,7 @@ def data_sender(request):
     products_ = Product.objects.all()
     categorys_ = Category.objects.all()
     socials = SosialMedia.objects.all()
-    main_detail = MainDetails.objects.all()
+    main_detail = MainDetails.objects.last()
     
     return {"products_": products_,"categorys_":categorys_,"form":form,"socials":socials,"main_detail":main_detail}
     

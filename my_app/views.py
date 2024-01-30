@@ -39,9 +39,7 @@ def checkout_view(request):
 def contact_view(request):
    
     form = ContactForm()
-    main_detail = MainDetails.objects.all()
 
-    
     if request.method == 'POST':
         form = ContactForm(request.POST or None)
         print(form.errors)
@@ -52,11 +50,9 @@ def contact_view(request):
     context ={
 
       'form':form,
-      'main_detail':main_detail,
-   
-      
-      
+    
     }
+    
     return render(request,'contact.html',context)
 
 
