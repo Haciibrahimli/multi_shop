@@ -1,8 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from my_app.forms import  ContactForm,CheckoutForm,CommentForm
 from my_app.models import (Product,Comment,Category,Partniors,SpecialOffer,Slider,Basket,Color,Size, 
 SosialMedia,Contact,MainDetails,)
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.urls import reverse, translate_url
+from django.conf import settings
+
+
+
+def set_language(request, lang_code): # translate
+    referer = request.META.get("HTTP_REFERER")
+
+    if referer:
+        response = redirect(translate_url(referer, lang_code))
+    else:
+        response = redirect(reverse('home'))
+
+    response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+    return response
 
 
 def cart_view(request):

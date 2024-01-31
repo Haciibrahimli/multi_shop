@@ -62,11 +62,15 @@
                         </div>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">EN</button>
+                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">{{LANGUAGE_CODE|upper}}</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">FR</button>
-                            <button class="dropdown-item" type="button">AR</button>
-                            <button class="dropdown-item" type="button">RU</button>
+ <!-- translate -->
+                            {% for i in LANGUAGES %}  
+                            {% if LANGUAGE_CODE != i.0 %}
+                            <a href="{% url 'set_lang' i.0 %}">
+                            <button class="dropdown-item" type="button">{{i.0|upper}}</button></a>
+                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
