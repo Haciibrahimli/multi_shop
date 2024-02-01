@@ -14,21 +14,16 @@ SOCIAL_CHOICES = (
     ("tiktok", "Tiktok")
 )
 
-
-
-
-
 COUNTRY_CHOICES = (
+   
     ("usa", "Amerika"),
     ("az", "Azerbaijan"),
     ("eu", "Europa"),
     ("as", "Asia"),
-    
-    
+      
 )
 
 User = get_user_model()
-
 
 # Create your models here.
 class Category(SlugMixin,DateMixin):
@@ -49,9 +44,6 @@ class Category(SlugMixin,DateMixin):
         if not self.slug:
          self.slug = Generator.create_slug_shortcode(size=10, model_=Category)
         super(Category, self).save(*args, **kwargs)
-
-
-
 
 
 class Color(DateMixin,SlugMixin):
@@ -90,6 +82,8 @@ class Size(DateMixin,SlugMixin):
         super(Size, self).save(*args, **kwargs)
 
 
+
+
 class Product(SlugMixin,DateMixin):
      category = models.ForeignKey(Category,on_delete = models.SET_NULL,null = True,blank = True)
      name = models.CharField(max_length = 255,verbose_name = 'mehsulun adi')
@@ -114,6 +108,9 @@ class Product(SlugMixin,DateMixin):
         if not self.slug:
          self.slug = Generator.create_slug_shortcode(size=10, model_=Product)
         super(Product, self).save(*args, **kwargs)
+
+
+
 
     # partniors model yalniz image fild 
     # contact modeli form ve istifadeci yalniz 20 den az yaza bilr subject
